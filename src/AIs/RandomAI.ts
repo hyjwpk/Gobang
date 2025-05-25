@@ -1,10 +1,9 @@
+import { AI } from "./AI.js";
 import { Chessboard } from "../Shapes/Chessboard.js";
 
-export class RandomAI {
-    private chessboard: Chessboard;
-
+export class RandomAI extends AI {
     constructor(chessboard: Chessboard) {
-        this.chessboard = chessboard;
+        super(chessboard);
     }
 
     // 获取随机落子位置

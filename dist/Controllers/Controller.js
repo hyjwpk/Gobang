@@ -1,11 +1,11 @@
 import { Model } from "../Models/Model.js";
 import { View } from "../Views/View.js";
-import { RandomAI } from "../AIs/RandomAI.js";
+import { SimpleAI } from "../AIs/SimpleAI.js";
 export class Controller {
     constructor(canvasId, rows, cols, cellSize) {
         this.game = new Model(rows, cols, cellSize);
         this.view = new View(canvasId);
-        this.ai = new RandomAI(this.game.chessboard);
+        this.ai = new SimpleAI(this.game.chessboard);
         // 动态计算棋盘的起始坐标
         const boardWidth = cols * cellSize;
         const boardHeight = rows * cellSize;

@@ -1,6 +1,7 @@
-export class RandomAI {
+import { AI } from "./AI.js";
+export class RandomAI extends AI {
     constructor(chessboard) {
-        this.chessboard = chessboard;
+        super(chessboard);
     }
     // 获取随机落子位置
     getMove() {

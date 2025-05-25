@@ -1,11 +1,11 @@
 {
   "name": "gobang",
-  "version": "0.1.0",
+  "version": "0.4.0",
   "description": "Gobang game",
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
+    "build": "tsc && sed -i '' 's/\"0.1.0\"/\"'$(node -p 'require(\"./package.json\").version')'\"/' dist/config.js"
   },
   "repository": {
     "type": "git",
