@@ -1,9 +1,11 @@
 import { Model } from "../Models/Model.js";
 import { View } from "../Views/View.js";
+import { RandomAI } from "../AIs/RandomAI.js";
 
 export class Controller {
     private game: Model;
     private view: View;
+    private ai: RandomAI;
 
     private canvas: HTMLCanvasElement;
     private originX: number;
@@ -12,6 +14,7 @@ export class Controller {
     constructor(canvasId: string, rows: number, cols: number, cellSize: number) {
         this.game = new Model(rows, cols, cellSize);
         this.view = new View(canvasId);
+        this.ai = new RandomAI(this.game.chessboard);
 
         // 动态计算棋盘的起始坐标
         const boardWidth = cols * cellSize;
@@ -36,6 +39,14 @@ export class Controller {
         
             if (this.game.putChess(row, col)) {
                 this.view.drawChess(this.game.chessboard, row, col, this.game.currentPlayer !== "black"); // 先修改棋盘状态，再绘制棋子，因此传入的 isBlack 需要取反
+
+                const aiMove = this.ai.getMove();
+                if (aiMove) {
+                    const { row: aiRow, col: aiCol } = aiMove;
+                    if (this.game.putChess(aiRow, aiCol)) {
+                        this.view.drawChess(this.game.chessboard, aiRow, aiCol, this.game.currentPlayer !== "black");
+                    }
+                }
             }
         });
     }
