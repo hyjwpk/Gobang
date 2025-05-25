@@ -13,14 +13,45 @@ export class Model {
         if (!this.chessboard.putChess(row, col, this.currentPlayer === "black")) {
             return false;
         }
-        this.checkWin(row, col);
+        if (this.checkWin(row, col)) {
+            this.gameIsOver = true;
+        }
         this.currentPlayer = this.currentPlayer === "black" ? "white" : "black";
         return true;
     }
     // 检查是否获胜
     checkWin(row, col) {
-        // 检查横向、纵向、对角线是否有五子连珠
-        this.gameIsOver = false; // 假设未结束
+        return (this.checkDirection(row, col, 0, 1) || // 横向
+            this.checkDirection(row, col, 1, 0) || // 纵向
+            this.checkDirection(row, col, 1, 1) || // 主对角线
+            this.checkDirection(row, col, 1, -1) // 副对角线
+        );
+    }
+    // 检查某个方向是否有五子连珠
+    checkDirection(row, col, deltaRow, deltaCol) {
+        const isBlack = this.currentPlayer === "black";
+        let count = 1;
+        // 检查正方向
+        count += this.countInDirection(row, col, deltaRow, deltaCol, isBlack);
+        // 检查反方向
+        count += this.countInDirection(row, col, -deltaRow, -deltaCol, isBlack);
+        return count >= 5;
+    }
+    // 统计某个方向上的连续棋子数
+    countInDirection(row, col, deltaRow, deltaCol, isBlack) {
+        let count = 0;
+        let currentRow = row + deltaRow;
+        let currentCol = col + deltaCol;
+        while (currentRow >= 0 &&
+            currentRow < this.chessboard.rows &&
+            currentCol >= 0 &&
+            currentCol < this.chessboard.cols &&
+            this.chessboard.board[currentRow][currentCol] === isBlack) {
+            count++;
+            currentRow += deltaRow;
+            currentCol += deltaCol;
+        }
+        return count;
     }
 }
 //# sourceMappingURL=Model.js.map
