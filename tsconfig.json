@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "esnext",
+        "lib": ["dom", "es6"],
+        "strict": true,
+        "esModuleInterop": true,
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "sourceMap": true,
+        "noEmitOnError": true
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules"]
+}

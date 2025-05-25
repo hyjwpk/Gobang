@@ -1,0 +1,31 @@
+{
+  "name": "gobang",
+  "version": "0.1.0",
+  "description": "Gobang game",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hyjwpk/Gobang.git"
+  },
+  "keywords": [
+    "Gobang"
+  ],
+  "author": "hyjwpk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hyjwpk/Gobang/issues"
+  },
+  "homepage": "https://github.com/hyjwpk/Gobang#readme",
+  "dependencies": {
+    "bootstrap": "^5.3.6",
+    "jquery": "^3.7.1"
+  },
+  "devDependencies": {
+    "@types/jquery": "^3.5.32",
+    "typescript": "^5.8.3"
+  }
+}

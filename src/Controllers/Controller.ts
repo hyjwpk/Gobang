@@ -1,0 +1,42 @@
+import { Model } from "../Models/Model.js";
+import { View } from "../Views/View.js";
+
+export class Controller {
+    private game: Model;
+    private view: View;
+
+    private canvas: HTMLCanvasElement;
+    private originX: number;
+    private originY: number;
+
+    constructor(canvasId: string, rows: number, cols: number, cellSize: number) {
+        this.game = new Model(rows, cols, cellSize);
+        this.view = new View(canvasId);
+
+        // 动态计算棋盘的起始坐标
+        const boardWidth = cols * cellSize;
+        const boardHeight = rows * cellSize;
+        this.canvas = document.getElementById(canvasId) as HTMLCanvasElement;
+        this.originX = (this.canvas.width - boardWidth) / 2;
+        this.originY = (this.canvas.height - boardHeight) / 2;
+
+        this.game.chessboard.originX = this.originX;
+        this.game.chessboard.originY = this.originY;
+        this.view.drawChessboard(this.game.chessboard);
+        this.registerEvents(cellSize);
+    }
+
+    private registerEvents(cellSize: number): void {
+        this.canvas.addEventListener("click", (event) => {
+            const rect = this.canvas.getBoundingClientRect(); // 获取 Canvas 的边界
+            const x = event.clientX - rect.left; // 鼠标点击的 X 坐标
+            const y = event.clientY - rect.top;  // 鼠标点击的 Y 坐标
+            const col = Math.round((x - this.originX) / cellSize); // 使用 Math.round 计算列号
+            const row = Math.round((y - this.originY) / cellSize); // 使用 Math.round 计算行号
+        
+            if (this.game.putChess(row, col)) {
+                this.view.drawChess(this.game.chessboard, row, col, this.game.currentPlayer !== "black"); // 先修改棋盘状态，再绘制棋子，因此传入的 isBlack 需要取反
+            }
+        });
+    }
+}
