@@ -11,19 +11,19 @@ export class Chessboard extends Shape {
     drawOn(ctx) {
         ctx.save();
         // 绘制横线
-        for (let i = 0; i <= this.rows; i++) {
+        for (let i = 0; i < this.rows; i++) {
             const y = this.originY + i * this.cellSize;
             ctx.beginPath();
             ctx.moveTo(this.originX, y);
-            ctx.lineTo(this.originX + this.cols * this.cellSize, y);
+            ctx.lineTo(this.originX + (this.cols - 1) * this.cellSize, y);
             ctx.stroke();
         }
         // 绘制竖线
-        for (let i = 0; i <= this.cols; i++) {
+        for (let i = 0; i < this.cols; i++) {
             const x = this.originX + i * this.cellSize;
             ctx.beginPath();
             ctx.moveTo(x, this.originY);
-            ctx.lineTo(x, this.originY + this.rows * this.cellSize);
+            ctx.lineTo(x, this.originY + (this.rows - 1) * this.cellSize);
             ctx.stroke();
         }
         ctx.restore();
