@@ -29,7 +29,7 @@ export class SimpleAI extends AI {
         let maxScore = -Infinity;
         for (let row = 0; row < this.chessboard.rows; row++) {
             for (let col = 0; col < this.chessboard.cols; col++) {
-                if (scores[row][col] > maxScore) {
+                if (scores[row][col] > maxScore && this.chessboard.board[row][col] === null) {
                     maxScore = scores[row][col];
                     bestMove = { row, col };
                 }

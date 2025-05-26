@@ -10,8 +10,8 @@ window.onload = () => {
     const maxHeight = window.innerHeight - 150; // 页面高度减去顶部和底部的空间
     const cellSize = Math.min(Math.floor(maxWidth / cols), Math.floor(maxHeight / rows));
     // 设置 Canvas 尺寸
-    const boardWidth = cols * cellSize;
-    const boardHeight = rows * cellSize;
+    const boardWidth = (cols - 1) * cellSize;
+    const boardHeight = (rows - 1) * cellSize;
     canvas.width = boardWidth + 50; // 给棋盘留出边距
     canvas.height = boardHeight + 50;
     // 初始化控制器并传递棋盘参数

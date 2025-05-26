@@ -19,8 +19,8 @@ export class Controller {
         this.ai = new SimpleAI(this.game.chessboard);
 
         // 动态计算棋盘的起始坐标
-        const boardWidth = cols * cellSize;
-        const boardHeight = rows * cellSize;
+        const boardWidth = (cols - 1) * cellSize;
+        const boardHeight = (rows - 1) * cellSize;
         this.canvas = document.getElementById(canvasId) as HTMLCanvasElement;
         this.originX = (this.canvas.width - boardWidth) / 2;
         this.originY = (this.canvas.height - boardHeight) / 2;
