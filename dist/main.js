@@ -7,7 +7,7 @@ window.onload = () => {
     const cols = 15; // 列数
     // 动态计算单元格大小，确保棋盘适配页面大小
     const maxWidth = window.innerWidth - 50; // 页面宽度减去边距
-    const maxHeight = window.innerHeight - 150; // 页面高度减去顶部和底部的空间
+    const maxHeight = window.innerHeight - 200; // 页面高度减去顶部和底部的空间
     const cellSize = Math.min(Math.floor(maxWidth / cols), Math.floor(maxHeight / rows));
     // 设置 Canvas 尺寸
     const boardWidth = (cols - 1) * cellSize;

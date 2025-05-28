@@ -22,5 +22,6 @@ export class RandomAI extends AI {
         const randomIndex = Math.floor(Math.random() * emptyPositions.length);
         return emptyPositions[randomIndex];
     }
+    undoLastMove(lastMove) { }
 }
 //# sourceMappingURL=RandomAI.js.map

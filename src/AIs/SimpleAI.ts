@@ -120,4 +120,6 @@ export class SimpleAI extends AI {
         if (count === 1 && block === 1) return 0;  // 冲二
         return 0;
     }
+
+    public undoLastMove(lastMove: { row: number; col: number }): void { }
 }

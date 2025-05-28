@@ -114,5 +114,6 @@ export class SimpleAI extends AI {
             return 0; // 冲二
         return 0;
     }
+    undoLastMove(lastMove) { }
 }
 //# sourceMappingURL=SimpleAI.js.map

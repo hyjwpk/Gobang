@@ -14,7 +14,12 @@ export class MiniMaxAI extends AI {
     }
     // 获取最佳落子位置
     getMove(lastMove) {
-        this.updateLineScores(lastMove.row, lastMove.col); // 更新线分数
+        if (lastMove) {
+            this.updateLineScores(lastMove.row, lastMove.col); // 更新线分数
+        }
+        else {
+            return { row: 7, col: 7 }; // 如果没有上一步落子，返回中心位置
+        }
         const bestMove = this.minimax(5, true, -Infinity, Infinity).move; // 使用极大极小算法获取最佳落子位置
         if (bestMove) {
             this.chessboard.board[bestMove.row][bestMove.col] = this.isBlack; // 假设 AI 落子
@@ -278,6 +283,9 @@ export class MiniMaxAI extends AI {
             currentCol += deltaCol;
         }
         return count;
+    }
+    undoLastMove(lastMove) {
+        this.updateLineScores(lastMove.row, lastMove.col); // 恢复线分数
     }
 }
 // 评分表：定义棋型及其对应的分数

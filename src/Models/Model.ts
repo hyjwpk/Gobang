@@ -1,12 +1,19 @@
 import { Chessboard } from "../Shapes/Chessboard.js";
+import { AI } from "../AIs/AI.js";
+import { RandomAI } from "../AIs/RandomAI.js";
+import { SimpleAI } from "../AIs/SimpleAI.js";
+import { MiniMaxAI } from "../AIs/MiniMaxAI.js";
 
 export class Model {
-    chessboard: Chessboard;
-    currentPlayer: "black" | "white" = "black";
-    gameIsOver: boolean = false;
+    public chessboard: Chessboard;
+    public currentPlayer: "black" | "white" = "black";
+    public moves: { row: number; col: number; isBlack: boolean }[] = []; // 记录落子顺序
+    public gameIsOver: boolean = false;
+    private ai: AI;
 
-    constructor(rows: number, cols: number, cellSize: number) {
+    constructor(rows: number, cols: number, cellSize: number, computerFirst: boolean) {
         this.chessboard = new Chessboard(0, 0, rows, cols, cellSize);
+        this.ai = new MiniMaxAI(this.chessboard, computerFirst); // AI 初始化
     }
 
     // 玩家在指定位置落子
@@ -17,6 +24,7 @@ export class Model {
         if (!this.chessboard.putChess(row, col, this.currentPlayer === "black")) {
             return false;
         }
+        this.moves.push({ row, col, isBlack: this.currentPlayer === "black" }); // 记录落子信息
         if (this.checkWin(row, col)) {
             this.gameIsOver = true;
         }
@@ -67,5 +75,28 @@ export class Model {
         }
 
         return count;
+    }
+
+    public getMove(lastMove?: { row: number; col: number }): { row: number; col: number } | null {
+        if (this.gameIsOver) {
+            return null;
+        }
+        const aiMove = this.ai.getMove(lastMove);
+        return aiMove;
+    }
+
+    public undoLastMove(): void {
+        if (this.gameIsOver === false && this.moves.length >= 2) {
+            const lastMove = this.moves.pop(); // 移除最后一个落子
+            if (lastMove) {
+                this.chessboard.board[lastMove.row][lastMove.col] = null; // 清除棋盘上的最后一个落子
+                this.ai.undoLastMove(lastMove);
+            }
+            const secondLastMove = this.moves.pop(); // 移除倒数第二个落子
+            if (secondLastMove) {
+                this.chessboard.board[secondLastMove.row][secondLastMove.col] = null; // 清除棋盘上的倒数第二个落子
+                this.ai.undoLastMove(secondLastMove);
+            }
+        }
     }
 }

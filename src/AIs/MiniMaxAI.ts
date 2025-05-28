@@ -43,8 +43,12 @@ export class MiniMaxAI extends AI {
     }
 
     // 获取最佳落子位置
-    public getMove(lastMove: { row: number; col: number }): { row: number; col: number } | null {
-        this.updateLineScores(lastMove.row, lastMove.col); // 更新线分数
+    public getMove(lastMove?: { row: number; col: number }): { row: number; col: number } | null {
+        if (lastMove) {
+            this.updateLineScores(lastMove.row, lastMove.col); // 更新线分数
+        } else {
+            return { row: 7, col: 7 }; // 如果没有上一步落子，返回中心位置
+        }
 
         const bestMove = this.minimax(5, true, -Infinity, Infinity).move; // 使用极大极小算法获取最佳落子位置
 
@@ -353,5 +357,9 @@ export class MiniMaxAI extends AI {
         }
 
         return count;
+    }
+
+    public undoLastMove(lastMove: { row: number; col: number }): void {
+        this.updateLineScores(lastMove.row, lastMove.col); // 恢复线分数
     }
 }

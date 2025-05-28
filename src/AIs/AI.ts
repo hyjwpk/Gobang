@@ -8,4 +8,6 @@ export abstract class AI {
     }
 
     public abstract getMove(lastMove?: { row: number; col: number }): { row: number; col: number } | null;
+
+    public abstract undoLastMove(lastMove: { row: number; col: number }): void;
 }
