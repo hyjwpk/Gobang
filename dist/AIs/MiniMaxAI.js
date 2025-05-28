@@ -158,8 +158,10 @@ export class MiniMaxAI extends AI {
             // 假设落子
             this.chessboard.board[row][col] = isMaximizing ? this.isBlack : !this.isBlack;
             this.updateLineScores(row, col); // 更新线分数
-            // 递归调用 minimax
-            const result = this.minimax(depth - 1, !isMaximizing, alpha, beta);
+            // 检查游戏是否结束
+            const result = this.checkWin(row, col)
+                ? this.minimax(0, !isMaximizing, alpha, beta) // 如果游戏结束，直接调用 minimax，深度为 0
+                : this.minimax(depth - 1, !isMaximizing, alpha, beta); // 否则继续递归调用 minimax
             // 恢复棋盘状态
             this.chessboard.board[row][col] = null;
             this.updateLineScores(row, col); // 恢复线分数
@@ -242,6 +244,40 @@ export class MiniMaxAI extends AI {
     // 评估整个棋盘的分数
     evaluateBoard() {
         return this.myTotalScore - this.opponentTotalScore;
+    }
+    // 检查是否获胜
+    checkWin(row, col) {
+        return (this.checkDirection(row, col, 0, 1) || // 横向
+            this.checkDirection(row, col, 1, 0) || // 纵向
+            this.checkDirection(row, col, 1, 1) || // 主对角线
+            this.checkDirection(row, col, 1, -1) // 副对角线
+        );
+    }
+    // 检查某个方向是否有五子连珠
+    checkDirection(row, col, deltaRow, deltaCol) {
+        const isBlack = this.chessboard.board[row][col] === true;
+        let count = 1;
+        // 检查正方向
+        count += this.countInDirection(row, col, deltaRow, deltaCol, isBlack);
+        // 检查反方向
+        count += this.countInDirection(row, col, -deltaRow, -deltaCol, isBlack);
+        return count >= 5;
+    }
+    // 统计某个方向上的连续棋子数
+    countInDirection(row, col, deltaRow, deltaCol, isBlack) {
+        let count = 0;
+        let currentRow = row + deltaRow;
+        let currentCol = col + deltaCol;
+        while (currentRow >= 0 &&
+            currentRow < this.chessboard.rows &&
+            currentCol >= 0 &&
+            currentCol < this.chessboard.cols &&
+            this.chessboard.board[currentRow][currentCol] === isBlack) {
+            count++;
+            currentRow += deltaRow;
+            currentCol += deltaCol;
+        }
+        return count;
     }
 }
 // 评分表：定义棋型及其对应的分数
