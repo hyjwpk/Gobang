@@ -10,6 +10,7 @@ export class SimpleAI extends AI {
         for (let row = 0; row < this.chessboard.rows; row++) {
             for (let col = 0; col < this.chessboard.cols; col++) {
                 if (this.chessboard.board[row][col] === null) {
+                    // 这里谁是黑棋或白棋并不重要，因为我们都需要计算分数之和
                     // 模拟 AI 落子，计算分数
                     scores[row][col] = this.computeScore(row, col, true);
                     // 模拟对手落子，计算威胁分数

@@ -3,6 +3,7 @@ import { View } from "../Views/View.js";
 import { AI } from "../AIs/AI.js";
 import { RandomAI } from "../AIs/RandomAI.js";
 import { SimpleAI } from "../AIs/SimpleAI.js";
+import { MiniMaxAI } from "../AIs/MiniMaxAI.js";
 
 export class Controller {
     private game: Model;
@@ -16,7 +17,7 @@ export class Controller {
     constructor(canvasId: string, rows: number, cols: number, cellSize: number) {
         this.game = new Model(rows, cols, cellSize);
         this.view = new View(canvasId);
-        this.ai = new SimpleAI(this.game.chessboard);
+        this.ai = new MiniMaxAI(this.game.chessboard, this.game.currentPlayer !== "black");
 
         // 动态计算棋盘的起始坐标
         const boardWidth = (cols - 1) * cellSize;
@@ -42,7 +43,7 @@ export class Controller {
             if (this.game.putChess(row, col)) {
                 this.view.drawChess(this.game.chessboard, row, col, this.game.currentPlayer !== "black"); // 先修改棋盘状态，再绘制棋子，因此传入的 isBlack 需要取反
 
-                const aiMove = this.ai.getMove();
+                const aiMove = this.ai.getMove({ row, col }); // 获取 AI 的落子位置
                 if (aiMove) {
                     const { row: aiRow, col: aiCol } = aiMove;
                     if (this.game.putChess(aiRow, aiCol)) {
