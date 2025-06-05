@@ -6,7 +6,6 @@ export class AlphaAI extends AI {
         this.modelPath = "dist/AIs/Models/policy_value_net.onnx";
         this.isBlack = isBlack; // 记录当前玩家是否为黑棋
         this.session = null;
-        this.loadModel();
     }
 
     // 加载 ONNX 模型
@@ -21,8 +20,11 @@ export class AlphaAI extends AI {
     // 获取 AI 的下一步动作
     async getMove(lastMove) {
         if (!this.session) {
-            console.error("模型未加载");
-            return null;
+            await this.loadModel();
+            if (!this.session) {
+                console.error("模型加载失败，无法进行推理");
+                return null;
+            }
         }
 
         try {
