@@ -18,7 +18,10 @@ export class MiniMaxAI extends AI {
             this.updateLineScores(lastMove.row, lastMove.col); // 更新线分数
         }
         else {
-            return { row: 7, col: 7 }; // 如果没有上一步落子，返回中心位置
+            // 如果没有上一步落子，返回中心位置
+            const centerRow = Math.floor(this.chessboard.rows / 2);
+            const centerCol = Math.floor(this.chessboard.cols / 2);
+            return { row: centerRow, col: centerCol };
         }
         const bestMove = this.minimax(5, true, -Infinity, Infinity).move; // 使用极大极小算法获取最佳落子位置
         if (bestMove) {
