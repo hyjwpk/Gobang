@@ -1,6 +1,6 @@
 {
   "name": "gobang",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Gobang game",
   "main": "index.html",
   "scripts": {
@@ -21,11 +21,8 @@
   },
   "homepage": "https://github.com/hyjwpk/Gobang#readme",
   "dependencies": {
-    "bootstrap": "^5.3.6",
-    "jquery": "^3.7.1"
   },
   "devDependencies": {
-    "@types/jquery": "^3.5.32",
     "typescript": "^5.8.3"
   }
 }
