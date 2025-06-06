@@ -84,6 +84,13 @@ export class AlphaAI extends AI {
         return __awaiter(this, void 0, void 0, function* () {
             if (!this.session)
                 return null;
+            // 判断 lastMove 的节点是否存在
+            if (lastMove && this.root.children.has(lastMove.row * this.chessboard.cols + lastMove.col)) {
+                this.root = this.root.children.get(lastMove.row * this.chessboard.cols + lastMove.col);
+            }
+            else {
+                this.root = new TreeNode(null, 1.0); // 重置根节点
+            }
             for (let i = 0; i < this.nPlayout; i++) {
                 const boardCopy = this.copyBoard(this.chessboard);
                 yield this.playout(boardCopy, lastMove);
@@ -98,7 +105,7 @@ export class AlphaAI extends AI {
                 }
             }
             console.log("评估值：", this.root.children.get(bestAction).Q);
-            this.root = new TreeNode(null, 1.0);
+            this.root = this.root.children.get(bestAction);
             const row = Math.floor(bestAction / this.chessboard.cols);
             const col = bestAction % this.chessboard.cols;
             return { row, col };
