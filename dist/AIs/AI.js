@@ -1,6 +1,1 @@
-export class AI {
-    constructor(chessboard) {
-        this.chessboard = chessboard;
-    }
-}
-//# sourceMappingURL=AI.js.map
+export class AI{constructor(s){this.chessboard=s}}

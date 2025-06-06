@@ -1,11 +1,12 @@
 {
   "name": "gobang",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "description": "Gobang game",
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc && sed -i '' 's/\"0.1.0\"/\"'$(node -p 'require(\"./package.json\").version')'\"/' dist/config.js"
+    "build": "tsc && sed -i '' 's/\"0.1.0\"/\"'$(node -p 'require(\"./package.json\").version')'\"/' dist/config.js",
+    "obfuscate": "find dist -name '*.js' -exec terser {} --compress --mangle toplevel --mangle-props regex=/^[a-zA-Z_]\\w*$/ --output {} \\;"
   },
   "repository": {
     "type": "git",
@@ -20,9 +21,8 @@
     "url": "https://github.com/hyjwpk/Gobang/issues"
   },
   "homepage": "https://github.com/hyjwpk/Gobang#readme",
-  "dependencies": {
-  },
   "devDependencies": {
+    "terser": "^5.41.0",
     "typescript": "^5.8.3"
   }
 }

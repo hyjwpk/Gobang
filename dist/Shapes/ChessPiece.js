@@ -1,11 +1,1 @@
-import { Circle } from "./Circle.js";
-export class ChessPiece extends Circle {
-    constructor(originX, originY, radius, isBlack) {
-        super(originX, originY, radius);
-        this.fillColor = isBlack ? "black" : "white";
-    }
-    drawOn(ctx) {
-        super.drawOn(ctx);
-    }
-}
-//# sourceMappingURL=ChessPiece.js.map
+import{Circle as e}from"./Circle.js";export class ChessPiece extends e{constructor(e,s,r,t){super(e,s,r),this.fillColor=t?"black":"white"}drawOn(e){super.drawOn(e)}}
